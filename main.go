@@ -22,13 +22,15 @@ func CreateOperators(w http.ResponseWriter, req *http.Request) {
 		err        error
 		deployment Deployment
 	)
+
 	err = json.NewDecoder(req.Body).Decode(&deployment)
 	if err != nil {
 		panic(err)
 	}
+
 	if deployment.Deployment == "prometheus" {
 		cmdName := "kubectl"
-		cmdArgs := []string{"apply", "-f", "."}
+		cmdArgs := []string{"apply", "-f", "00namespace-namespace.yaml"}
 		cmdExec := exec.Command(cmdName, cmdArgs...)
 		cmdExec.Dir = "./manifests"
 		if cmdOut, err = cmdExec.Output(); err != nil {
@@ -38,9 +40,14 @@ func CreateOperators(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, string(cmdOut))
 
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "deployment with this name does'nt exist, valid ones are prometheus and anchor")
 	}
-
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(deployment); err != nil {
+		panic(err)
+	}
 }
 
 func main() {
