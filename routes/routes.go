@@ -2,8 +2,9 @@ package routes
 
 import (
 	"net/http"
-	"github.com/k8s-api/handlers"
+
 	"github.com/gorilla/mux"
+	"github.com/k8s-api/handlers"
 )
 
 type Route struct {
@@ -33,7 +34,19 @@ var routes = Routes{
 	Route{
 		"Deploy",
 		"POST",
-		"/deploy",
-		handlers.CreateOperators,
+		"/deploy/prometheus",
+		handlers.CreatePromOperators,
+	},
+	Route{
+		"Deploy",
+		"POST",
+		"/deploy/anchore",
+		handlers.CreateAnchoreOperators,
+	},
+	Route{
+		"GetSvc",
+		"GET",
+		"/getsvc/prometheus",
+		handlers.GetSvc,
 	},
 }
