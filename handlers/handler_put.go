@@ -36,7 +36,7 @@ func PutSvcProm(w http.ResponseWriter, req *http.Request) {
 			panic(err)
 		}
 
-		req, err := http.NewRequest(http.MethodPut, "http://34.208.221.82/cluster/demo1/monitor", bytes.NewBuffer(json))
+		req, err := http.NewRequest(http.MethodPut, "", bytes.NewBuffer(json))
 		/*
 			if err != nil {
 				panic(err)
@@ -68,7 +68,7 @@ func PutSvcAnc(w http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		req, err := http.NewRequest(http.MethodPut, "http://34.208.221.82/cluster/demo1/monitor", bytes.NewBuffer(json))
+		req, err := http.NewRequest(http.MethodPut, "", bytes.NewBuffer(json))
 		if err != nil {
 			panic(err)
 		}
