@@ -308,7 +308,7 @@ spec:
 
     # kubernetes service configuration for anchore catalog api
     service:
-      type: ClusterIP
+      type: LoadBalancer
       port: 8082
       annotations: {}
 
@@ -343,7 +343,7 @@ spec:
 
     # kubernetes service configuration for anchore policy engine api
     service:
-      type: ClusterIP
+      type: LoadBalancer
       port: 8087
       annotations: {}
 

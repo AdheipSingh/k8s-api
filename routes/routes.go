@@ -44,9 +44,15 @@ var routes = Routes{
 		handlers.CreateAnchoreOperators,
 	},
 	Route{
-		"GetSvc",
+		"PutSvc",
 		"GET",
 		"/getsvc/prometheus",
-		handlers.GetSvc,
+		handlers.GetSvcProm,
+	},
+	Route{
+		"PutSvc",
+		"GET",
+		"/getsvc/anchore",
+		handlers.GetSvcAnc,
 	},
 }
