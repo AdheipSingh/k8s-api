@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -16,7 +17,7 @@ const (
 
 var err error
 
-func GetSvcProm(w http.ResponseWriter, req *http.Request) {
+func PutSvcProm(w http.ResponseWriter, req *http.Request) {
 
 	clientset := utils.GetKubeClientset()
 
@@ -30,15 +31,25 @@ func GetSvcProm(w http.ResponseWriter, req *http.Request) {
 	for i, svc := range svcs.Items {
 		service := svc.Status.LoadBalancer.Ingress
 		fmt.Fprintf(w, "Access the Grafana on the following url\n")
-		json.NewEncoder(w).Encode(service)
+		json, err := json.Marshal(service)
+		if err != nil {
+			panic(err)
+		}
+
+		req, err := http.NewRequest(http.MethodPut, "http://34.208.221.82/cluster/demo1/monitor", bytes.NewBuffer(json))
+		/*
+			if err != nil {
+				panic(err)
+			}
+		*/
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+
 		log.Printf("Grafana Service Name: %d Service Name: %+v\n", i, service)
 	}
 
-	//json.NewEncoder(w).Encode(svc)
-
 }
 
-func GetSvcAnc(w http.ResponseWriter, req *http.Request) {
+func PutSvcAnc(w http.ResponseWriter, req *http.Request) {
 
 	clientset := utils.GetKubeClientset()
 
@@ -53,6 +64,15 @@ func GetSvcAnc(w http.ResponseWriter, req *http.Request) {
 		service := svc.Status.LoadBalancer.Ingress
 		fmt.Fprintf(w, "Access the Anchore on the following url\n")
 		json.NewEncoder(w).Encode(service)
+		json, err := json.Marshal(service)
+		if err != nil {
+			panic(err)
+		}
+		req, err := http.NewRequest(http.MethodPut, "http://34.208.221.82/cluster/demo1/monitor", bytes.NewBuffer(json))
+		if err != nil {
+			panic(err)
+		}
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 		log.Printf("Anchore Service Name: %d Service Name: %+v\n", i, service)
 	}
 
