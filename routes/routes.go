@@ -55,4 +55,11 @@ var routes = Routes{
 		"/putsvc/anchore",
 		handlers.PutSvcAnc,
 	},
+
+	Route{
+		"GetPromStatus",
+		"GET",
+		"/getstatus/prometheus",
+		handlers.GetStatusProm,
+	},
 }
