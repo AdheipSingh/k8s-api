@@ -371,7 +371,7 @@ spec:
 
     # kubernetes service configuration for anchore simplequeue api
     service:
-      type: ClusterIP
+      type: LoadBalancer
       port: 8083
       annotations: {}
 
