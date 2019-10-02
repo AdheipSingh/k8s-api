@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: anchore-engine-operator
+  namespace: scanned
 spec:
   replicas: 1
   selector:
